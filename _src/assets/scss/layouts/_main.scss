@@ -1,0 +1,10 @@
+.main {
+  &__list {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  &__list--item {
+    margin-top: 25px;
+    list-style: none;
+  }
+}
