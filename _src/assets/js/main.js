@@ -23,7 +23,6 @@ const whichLevelIsChecked = () => {
 };
 
 // 2º Conecta con el servidor
-// Generar URL correctamente
 
 // 3º Formatea los datos - Selecciona los datos del JSON que vamos a usar (image)
 const formatServerData = data => {
@@ -53,10 +52,10 @@ const paintBackCards = () => {
     backCardsIndex < pokeCards.length;
     backCardsIndex++
   ) {
-    htmlCode += `<li class="backCardItem js-backCardItem" ><img src="assets/images/back-pokeCards.jpg" class="backCardImage js-backCardImg" data-index="${backCardsIndex}"></li>`;
+    htmlCode += `<li class="backCardItem js-backCardItem" ><img src="assets/images/back-pokeCards.jpg" class="backCardImage js-backCardImg" id="cardImage${backCardsIndex}" data-index="${backCardsIndex}"></li>`;
   }
   backCardsList.innerHTML = htmlCode;
-
+  //Escuchar click sobre carta (trasera)
   let backCardItems = document.querySelectorAll(".js-backCardImg");
   for (let backCardItem of backCardItems) {
     backCardItem.addEventListener("click", getPokeCard);
@@ -84,27 +83,21 @@ start.addEventListener("click", getDataFromServer); //Listener
 
 //////////////////////////////////////
 
-//Escuchar click sobre carta (trasera)
-
 // 1er click sobre una carta: Oculta la trasera y muestra la pokeCard (delantera)
+// 2º click sobre la misma carta: Oculta la pokeCard (delantera) y muestra la trasera.
 const getPokeCard = event => {
   event.preventDefault();
-  console.log(event.target.dataset.index);
+  const selectedBackCard = event.target.dataset.index;
+  const pokeCardsImage = pokeCards[selectedBackCard].image;
+  const clickedCard = document.getElementById(`cardImage${selectedBackCard}`);
+  // Acceder al elemento que recibe el click
+  // Sustituir el valor del src
+  if (clickedCard.src === pokeCardsImage) {
+    clickedCard.src = "assets/images/back-pokeCards.jpg";
+  } else {
+    clickedCard.src = pokeCardsImage;
+  }
 };
-// const paintPokeCards =
-// let pokeCardsList = document.querySelector(".js-pokeCardsList");
-// let htmlCode = "";
-// for (
-//   let pokeCardsIndex = 0;
-//   pokeCardsIndex < pokeCards.length;
-//   pokeCardsIndex++
-// ) {
-//   const pokeCardsImage = pokeCards[pokeCardsIndex].image;
-//   htmlCode += `<li class="pokeCardItem" data-index="${pokeCardsIndex}"><img src="${pokeCardsImage}" class="pokeCardImage"></li>`;
-// }
-// 2º click sobre la misma carta: Oculta la pokeCard (delantera) y muestra la trasera.
-
-// const showOrHideCardsOnClick = () => {};
 
 /////////////////////////////////////
 
