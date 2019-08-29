@@ -2,29 +2,81 @@
 
 //Almacenar constantes
 const start = document.querySelector(".js-startGame");
+const inputEasy = document.querySelector(".js-easyGame");
+const inputMedium = document.querySelector(".js-mediumGame");
+const inputHard = document.querySelector(".js-hardGame");
+let level;
+let pokeCards = [];
 
 //Escuchar click sobre el botón comenzar ¿qué hace la función llamada por el listener?
 
 // 1º Lee información de la selección de radio buttons
+
+const whichLevelIsChecked = () => {
+  if (inputEasy.checked === true) {
+    level = "4";
+  } else if (inputMedium.checked === true) {
+    level = "6";
+  } else if (inputHard.checked === true) {
+    level = "8";
+  }
+};
+
 // 2º Conecta con el servidor
+// Generar URL correctamente
+
 // 3º Formatea los datos - Selecciona los datos del JSON que vamos a usar (image)
+const formatServerData = data => {
+  let result = [];
+  for (let i = 0; i < data.length; i++) {
+    result.push({
+      image: data[i].image
+    });
+  }
+  return result;
+};
 // 4º Guarda los datos en una constante global que usaremos como dato principal
+const saveData = data => {
+  pokeCards = data;
+};
 // 5º Guarda la información en localStorage y la recupera (set&get)
+// const saveDataInLocalStorage
+
+// const getDataFromLocalStorage
+
 // 6º Pinta el número de cartas correspondientes sólo se ve la trasera (la delantera data.image está oculta por default)
+const paintBackCards = () => {
+  let backCardsList = document.querySelector(".js-cardsBackList");
+  let htmlCode = "";
+  for (
+    let backCardsIndex = 0;
+    backCardsIndex < pokeCards.length;
+    backCardsIndex++
+  ) {
+    htmlCode += `<li class="backCardItem js-backCardItem" ><img src="assets/images/back-pokeCards.jpg" class="backCardImage js-backCardImg" data-index="${backCardsIndex}"></li>`;
+  }
+  backCardsList.innerHTML = htmlCode;
+
+  let backCardItems = document.querySelectorAll(".js-backCardImg");
+  for (let backCardItem of backCardItems) {
+    backCardItem.addEventListener("click", getPokeCard);
+  }
+};
+
+//Función manejadora del evento:
 
 const getDataFromServer = event => {
   event.preventDefault();
-  const url = `https://raw.githubusercontent.com/Adalab/cards-data/master/${
-    input.value
-  }.json`;
+  whichLevelIsChecked();
+  const url = `https://raw.githubusercontent.com/Adalab/cards-data/master/${level}.json`; //no tengo claro que pueda leer el valor desde aquí.
   return fetch(url)
     .then(response => response.json())
     .then(data => {
       data = formatServerData(data);
       saveData(data);
-      setInLocalStorage();
-      getFromLocalStorage();
-      paintCards();
+      // setInLocalStorage();
+      // getFromLocalStorage();
+      paintBackCards();
     });
 };
 
@@ -33,10 +85,26 @@ start.addEventListener("click", getDataFromServer); //Listener
 //////////////////////////////////////
 
 //Escuchar click sobre carta (trasera)
+
 // 1er click sobre una carta: Oculta la trasera y muestra la pokeCard (delantera)
+const getPokeCard = event => {
+  event.preventDefault();
+  console.log(event.target.dataset.index);
+};
+// const paintPokeCards =
+// let pokeCardsList = document.querySelector(".js-pokeCardsList");
+// let htmlCode = "";
+// for (
+//   let pokeCardsIndex = 0;
+//   pokeCardsIndex < pokeCards.length;
+//   pokeCardsIndex++
+// ) {
+//   const pokeCardsImage = pokeCards[pokeCardsIndex].image;
+//   htmlCode += `<li class="pokeCardItem" data-index="${pokeCardsIndex}"><img src="${pokeCardsImage}" class="pokeCardImage"></li>`;
+// }
 // 2º click sobre la misma carta: Oculta la pokeCard (delantera) y muestra la trasera.
 
-const showOrHideCardsOnClick = () => {};
+// const showOrHideCardsOnClick = () => {};
 
 /////////////////////////////////////
 
