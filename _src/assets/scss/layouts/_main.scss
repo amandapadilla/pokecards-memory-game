@@ -1,9 +1,9 @@
 .main {
-  &__list {
+  &__cardsbacklist {
     display: flex;
     justify-content: space-evenly;
   }
-  &__list--item {
+  &__cardItem {
     margin-top: 25px;
     list-style: none;
   }

@@ -39,9 +39,14 @@ const saveData = data => {
   pokeCards = data;
 };
 // 5º Guarda la información en localStorage y la recupera (set&get)
-// const saveDataInLocalStorage
+const saveLevelInLocalStorage = () => {
+  localStorage.setItem("level", level);
+};
 
-// const getDataFromLocalStorage
+const getLevelFromLocalStorage = () => {
+  const savedLevel = localStorage.getItem("level");
+  return savedLevel;
+};
 
 // 6º Pinta el número de cartas correspondientes sólo se ve la trasera (la delantera data.image está oculta por default)
 const paintBackCards = () => {
@@ -52,7 +57,7 @@ const paintBackCards = () => {
     backCardsIndex < pokeCards.length;
     backCardsIndex++
   ) {
-    htmlCode += `<li class="backCardItem js-backCardItem" ><img src="assets/images/back-pokeCards.jpg" class="backCardImage js-backCardImg" id="cardImage${backCardsIndex}" data-index="${backCardsIndex}"></li>`;
+    htmlCode += `<li class="main__cardItem js-backCardItem" ><img src="assets/images/back-pokeCards.jpg" class="backCardImage js-backCardImg" id="cardImage${backCardsIndex}" data-index="${backCardsIndex}"></li>`;
   }
   backCardsList.innerHTML = htmlCode;
   //Escuchar click sobre carta (trasera)
@@ -65,16 +70,18 @@ const paintBackCards = () => {
 //Función manejadora del evento:
 
 const getDataFromServer = event => {
-  event.preventDefault();
+  if (event !== undefined) {
+    event.preventDefault();
+  }
   whichLevelIsChecked();
+  saveLevelInLocalStorage();
+  // const savedLevel = getLevelFromLocalStorage();
   const url = `https://raw.githubusercontent.com/Adalab/cards-data/master/${level}.json`; //no tengo claro que pueda leer el valor desde aquí.
   return fetch(url)
     .then(response => response.json())
     .then(data => {
       data = formatServerData(data);
       saveData(data);
-      // setInLocalStorage();
-      // getFromLocalStorage();
       paintBackCards();
     });
 };
@@ -99,6 +106,23 @@ const getPokeCard = event => {
   }
 };
 
+//Al iniciar la página por primera vez
+const initializePage = () => {
+  const savedLevel = getLevelFromLocalStorage();
+  if (savedLevel !== undefined) {
+    level = savedLevel;
+    if (savedLevel === "4") {
+      inputEasy.checked = true;
+    } else if (savedLevel === "6") {
+      inputMedium.checked = true;
+    } else if (savedLevel === "8") {
+      inputHard.checked = true;
+    }
+    getDataFromServer();
+  }
+};
+initializePage();
+
 /////////////////////////////////////
 
 //IMPLEMENTACIÓN DEL JUEGO
@@ -113,4 +137,15 @@ const getPokeCard = event => {
 ////////////////////////////////////
 
 //RESET BUTTON
+const resetButton = document.querySelector(".js-resetButton");
+
+const resetGame = () => {
+  localStorage.removeItem("level");
+  inputEasy.checked = false;
+  inputMedium.checked = false;
+  inputHard.checked = false;
+  let backCardsList = document.querySelector(".js-cardsBackList");
+  backCardsList.innerHTML = "";
+};
+resetButton.addEventListener("click", resetGame);
 //Al pulsar el botón de reset se borra la información guardada en el localStorage y se puede volver a escoger un nivel de juego y/o empezar de nuevo.
