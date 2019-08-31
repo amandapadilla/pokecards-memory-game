@@ -7,7 +7,8 @@ const inputMedium = document.querySelector(".js-mediumGame");
 const inputHard = document.querySelector(".js-hardGame");
 let level;
 let pokeCards = [];
-
+let pokemonName;
+let pokemonIndex;
 //Escuchar click sobre el botón comenzar ¿qué hace la función llamada por el listener?
 
 // 1º Lee información de la selección de radio buttons
@@ -29,7 +30,8 @@ const formatServerData = data => {
   let result = [];
   for (let i = 0; i < data.length; i++) {
     result.push({
-      image: data[i].image
+      image: data[i].image,
+      name: data[i].name
     });
   }
   return result;
@@ -38,7 +40,12 @@ const formatServerData = data => {
 const saveData = data => {
   pokeCards = data;
 };
-// 5º Guarda la información en localStorage y la recupera (set&get)
+
+// *** Randomizar el orden de las cartas en cada partida *** https://medium.com/front-end-weekly/getting-a-random-item-from-an-array-43e7e18e8796
+const shuffleCards = cardsArray => {
+  cardsArray.sort((card1, card2) => Math.random() - Math.random());
+};
+// 5º Guarda la información en localStorage
 const saveLevelInLocalStorage = () => {
   localStorage.setItem("level", level);
 };
@@ -73,6 +80,8 @@ const getDataFromServer = event => {
   if (event !== undefined) {
     event.preventDefault();
   }
+  const gameMessage = document.querySelector(".js-message");
+  gameMessage.innerHTML = ""; // CREAR FUNCIÓN que borre mensaje + variables globales pokemonName y pokemonIndex
   whichLevelIsChecked();
   saveLevelInLocalStorage();
   // const savedLevel = getLevelFromLocalStorage();
@@ -82,6 +91,7 @@ const getDataFromServer = event => {
     .then(data => {
       data = formatServerData(data);
       saveData(data);
+      shuffleCards(pokeCards);
       paintBackCards();
     });
 };
@@ -96,17 +106,40 @@ const getPokeCard = event => {
   event.preventDefault();
   const selectedBackCard = event.target.dataset.index;
   const pokeCardsImage = pokeCards[selectedBackCard].image;
+  const pokeCardName = pokeCards[selectedBackCard].name;
   const clickedCard = document.getElementById(`cardImage${selectedBackCard}`);
-  // Acceder al elemento que recibe el click
-  // Sustituir el valor del src
-  if (clickedCard.src === pokeCardsImage) {
-    clickedCard.src = "assets/images/back-pokeCards.jpg";
-  } else {
+  // Sustituir el valor del src (dar la vuelta a las cartas)
+  if (clickedCard.src !== pokeCardsImage) {
+    //   clickedCard.src = "assets/images/back-pokeCards.jpg";
+    // } else {
     clickedCard.src = pokeCardsImage;
+  }
+  // Acceder al elemento que recibe el click
+  if (pokemonName === undefined) {
+    pokemonName = pokeCardName;
+    pokemonIndex = selectedBackCard;
+  } else {
+    const gameMessage = document.querySelector(".js-message");
+    if (pokemonName === pokeCardName) {
+      gameMessage.innerHTML = "¡BIEN HECHO!";
+      pokemonIndex = undefined;
+    } else {
+      const hidePokeCards = () => {
+        document.getElementById(`cardImage${pokemonIndex}`).src =
+          "assets/images/back-pokeCards.jpg";
+        pokemonIndex = undefined;
+        clickedCard.src = "assets/images/back-pokeCards.jpg";
+        gameMessage.innerHTML = "";
+      };
+      setTimeout(hidePokeCards, 2000);
+      gameMessage.innerHTML = "Ooohhh...Prueba de nuevo :)";
+    }
+
+    pokemonName = undefined;
   }
 };
 
-//Al iniciar la página por primera vez
+//Al iniciar la página, traer datos from localStorage (get)
 const initializePage = () => {
   const savedLevel = getLevelFromLocalStorage();
   if (savedLevel !== undefined) {
@@ -127,9 +160,8 @@ initializePage();
 
 //IMPLEMENTACIÓN DEL JUEGO
 
-// Randomizar el orden de las cartas en cada partida
-
 //Escucha click sobre carta n1 + Escucha click sobre carta n2
+
 // ¿SON PAREJA?
 // SÍ: Las pokeCards quedan visibles (permanente) + se muestra mensaje: '¡Bien hecho!'
 // NO: Las pokeCards se muestran un par de segundos (temporizador-2000ms) y se ocultan y vuelven a mostrar la trasera + mensaje: 'Prueba de nuevo'.
@@ -146,6 +178,9 @@ const resetGame = () => {
   inputHard.checked = false;
   let backCardsList = document.querySelector(".js-cardsBackList");
   backCardsList.innerHTML = "";
+  const gameMessage = document.querySelector(".js-message");
+  gameMessage.innerHTML = "";
 };
 resetButton.addEventListener("click", resetGame);
+
 //Al pulsar el botón de reset se borra la información guardada en el localStorage y se puede volver a escoger un nivel de juego y/o empezar de nuevo.
