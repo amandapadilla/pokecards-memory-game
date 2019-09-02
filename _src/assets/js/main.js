@@ -73,15 +73,18 @@ const paintBackCards = () => {
     backCardItem.addEventListener("click", getPokeCard);
   }
 };
-
+//Funciones para borrar los valores iniciales de mensaje y variables globales
+const deleteMessage = () => {
+  const gameMessage = document.querySelector(".js-message");
+  gameMessage.innerHTML = "";
+};
 //Función manejadora del evento:
 
 const getDataFromServer = event => {
   if (event !== undefined) {
     event.preventDefault();
   }
-  const gameMessage = document.querySelector(".js-message");
-  gameMessage.innerHTML = ""; // CREAR FUNCIÓN que borre mensaje + variables globales pokemonName y pokemonIndex
+  deleteMessage(); // CREAR FUNCIÓN que borre mensaje + variables globales pokemonName y pokemonIndex
   whichLevelIsChecked();
   saveLevelInLocalStorage();
   // const savedLevel = getLevelFromLocalStorage();
@@ -129,9 +132,9 @@ const getPokeCard = event => {
           "assets/images/back-pokeCards.jpg";
         pokemonIndex = undefined;
         clickedCard.src = "assets/images/back-pokeCards.jpg";
-        gameMessage.innerHTML = "";
+        deleteMessage();
       };
-      setTimeout(hidePokeCards, 2000);
+      setTimeout(hidePokeCards, 1000);
       gameMessage.innerHTML = "Ooohhh...Prueba de nuevo :)";
     }
 
@@ -178,8 +181,7 @@ const resetGame = () => {
   inputHard.checked = false;
   let backCardsList = document.querySelector(".js-cardsBackList");
   backCardsList.innerHTML = "";
-  const gameMessage = document.querySelector(".js-message");
-  gameMessage.innerHTML = "";
+  deleteMessage();
 };
 resetButton.addEventListener("click", resetGame);
 
