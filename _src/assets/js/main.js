@@ -87,8 +87,7 @@ const getDataFromServer = event => {
   deleteMessage(); // CREAR FUNCIÓN que borre mensaje + variables globales pokemonName y pokemonIndex
   whichLevelIsChecked();
   saveLevelInLocalStorage();
-  // const savedLevel = getLevelFromLocalStorage();
-  const url = `https://raw.githubusercontent.com/Adalab/cards-data/master/${level}.json`; //no tengo claro que pueda leer el valor desde aquí.
+  const url = `https://raw.githubusercontent.com/Adalab/cards-data/master/${level}.json`;
   return fetch(url)
     .then(response => response.json())
     .then(data => {
