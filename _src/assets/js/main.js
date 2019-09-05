@@ -73,7 +73,7 @@ const paintBackCards = () => {
     backCardItem.addEventListener("click", getPokeCard);
   }
 };
-//Funciones para borrar los valores iniciales de mensaje y variables globales
+//Funciones para borrar los valores iniciales de mensaje
 const deleteMessage = () => {
   const gameMessage = document.querySelector(".js-message");
   gameMessage.innerHTML = "";
@@ -84,7 +84,7 @@ const getDataFromServer = event => {
   if (event !== undefined) {
     event.preventDefault();
   }
-  deleteMessage(); // CREAR FUNCIÓN que borre mensaje + variables globales pokemonName y pokemonIndex
+  deleteMessage();
   whichLevelIsChecked();
   saveLevelInLocalStorage();
   const url = `https://raw.githubusercontent.com/Adalab/cards-data/master/${level}.json`;
@@ -166,7 +166,7 @@ initializePage();
 
 // ¿SON PAREJA?
 // SÍ: Las pokeCards quedan visibles (permanente) + se muestra mensaje: '¡Bien hecho!'
-// NO: Las pokeCards se muestran un par de segundos (temporizador-2000ms) y se ocultan y vuelven a mostrar la trasera + mensaje: 'Prueba de nuevo'.
+// NO: Las pokeCards se muestran un par de segundos (temporizador-1000ms) y se ocultan y vuelven a mostrar la trasera + mensaje: 'Prueba de nuevo'.
 
 ////////////////////////////////////
 

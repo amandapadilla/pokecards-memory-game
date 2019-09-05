@@ -7,13 +7,37 @@
   padding: 30px 0 15px 0;
 }
 
-.easy {
-  padding: 5px 5px 5px 5px;
-}
-.form__start {
-  border-radius: 15px;
-  height: 60px;
-  color: white;
-  padding: 5px;
-  background-color: darkred;
+.form {
+  margin: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  border: solid 3px black;
+  border-radius: 25px;
+  &__message {
+    text-align: center;
+    color: black;
+    font-size: 18px;
+    font-weight: bolder;
+    display: inline-block;
+    margin: 20px 50px 20px 20px;
+    padding: 10px;
+  }
+  &__checkEasy {
+    margin: 10px;
+  }
+  &__checkMedium {
+    margin: 10px;
+  }
+  &__checkHard {
+    margin: 10px;
+  }
+  &__start {
+    border-radius: 10px;
+    font-size: 24px;
+    color: white;
+    margin: 5px 30px 5px 30px;
+    padding: 10px;
+    background-color: darkred;
+  }
 }

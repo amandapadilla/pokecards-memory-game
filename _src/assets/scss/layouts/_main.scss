@@ -2,6 +2,7 @@
   &__cardsbacklist {
     display: flex;
     justify-content: space-evenly;
+    margin-bottom: 20px;
   }
   &__cardItem {
     margin-top: 25px;
@@ -13,5 +14,7 @@
     border-radius: 15px;
     background-color: darkred;
     color: white;
+    padding: 10px;
+    margin: 35px;
   }
 }
