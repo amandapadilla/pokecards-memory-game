@@ -16,6 +16,8 @@
             <header class="header">
                 <img src="./assets/images/pokemon-logo.png" alt="Welcome to Pokémon Cards Memory Game"
                 class="header__cover" />
+                <img src="./assets/images/bulbasaur.png" alt="Bulbasaur te invita a jugar"
+                class="header__bulbasaur" />
                 <img src="./assets/images/pikachu.png" alt="Pikachu te saluda" class="header__pikachu"
                 />
                  <h1 class="header__title">El juego de las parejas</h1>
@@ -23,16 +25,17 @@
                 <button class="header__button js-resetButton">Reset</button>
             </header>
             <form class="form js-form">
-                <label for="check4">Fácil (2 parejas)</label>
-                <input type="radio" name="level" id="check4"
-                class="form__checkEasy js-easyGame" />
-                <label for="check6">Medio (3 parejas)</label>
-                <input type="radio" name="level" id="check6"
-                class="form__checkMedium js-mediumGame" />
-                <label for="check8">Difícil (4 parejas)</label>
-                <input type="radio" name="level" id="check8"
-                class="form__checkHard js-hardGame" />
-                <button class="form__start js-startGame">Comenzar</button>
+                <p class="form__message">Selecciona el nivel con el que te gustaría jugar:</p>
+                <label for="check4">Fácil</label>
+                <input type="radio" name="level" id="check4" class="form__checkEasy js-easyGame"
+                />
+                <label for="check6">Medio</label>
+                <input type="radio" name="level" id="check6" class="form__checkMedium js-mediumGame"
+                />
+                <label for="check8">Difícil</label>
+                <input type="radio" name="level" id="check8" class="form__checkHard js-hardGame"
+                />
+                <button class="form__start js-startGame">Comenzar a jugar</button>
             </form>
             <main class="main">
                 <ul class="main__cardsbacklist js-cardsBackList"></ul>
