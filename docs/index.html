@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+    
+    <head>
+        <meta charset="UTF-8" />
+        <title>Pokémon Cards Memory Game</title>
+        <link rel="icon" href="./Favicon.png"
+        />
+        <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap"
+        rel="stylesheet" />
+        <link rel="stylesheet" href="./assets/css/main.css" />
+    </head>
+    
+    <body>
+        <div class="page">
+            <header class="header">
+                <img src="./assets/images/pokemon-logo.png" alt="Welcome to Pokémon Cards Memory Game"
+                class="header__cover" />
+                <img src="./assets/images/pikachu.png" alt="Pikachu te saluda" class="header__pikachu"
+                />
+                 <h1 class="header__title">El juego de las parejas</h1>
+
+                <button class="header__button js-resetButton">Reset</button>
+            </header>
+            <form class="form js-form">
+                <label for="check4">Fácil (2 parejas)</label>
+                <input type="radio" name="level" id="check4"
+                class="form__checkEasy js-easyGame" />
+                <label for="check6">Medio (3 parejas)</label>
+                <input type="radio" name="level" id="check6"
+                class="form__checkMedium js-mediumGame" />
+                <label for="check8">Difícil (4 parejas)</label>
+                <input type="radio" name="level" id="check8"
+                class="form__checkHard js-hardGame" />
+                <button class="form__start js-startGame">Comenzar</button>
+            </form>
+            <main class="main">
+                <ul class="main__cardsbacklist js-cardsBackList"></ul>
+                <!-- <ul class="main__pokelist js-pokeCardsList"></ul> -->
+                 <h3 class="main__message js-message"></h3>
+
+            </main>
+        </div>
+        <script type="text/javascript" src="./assets/js/main.js"></script>
+    </body>
+
+</html>
