@@ -1,4 +1,4 @@
-![Pokémon Cards Memory Game](_src/assets/images/pikachu.png)
+![Pokémon Cards Memory Game](_src/assets/images/demo.png)
 
 # El juego de las parejas
 
