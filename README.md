@@ -22,5 +22,3 @@ Sólo la primera vez que lo selecciones. El juego almacena tu elección en local
 Tenemos las cartas boca abajo. Para empezar a jugar debemos hacer click sobre la carta que queremos desvelar. Al hacer click la carta mostrará su cara frontal, con un personaje. Ahora vamos a buscar su pareja.
 
 Haz click sobre otra carta. Si es su pareja ambas quedarán boca arriba. Si no se mostrarán durante un par de segundos y se darán la vuelta.
-
-(\_src/assets/images/memory-game.png)
